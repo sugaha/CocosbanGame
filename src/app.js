@@ -24,6 +24,15 @@ var gameScene = cc.Scene.extend({
     layer0.init();
     this.addChild(layer0);
 
+    //音楽再生エンジン
+        audioEngine = cc.audioEngine;
+        //bgm再生
+        if (!audioEngine.isMusicPlaying()) {
+          //audioEngine.playMusic("res/bgm_main.mp3", true);
+          audioEngine.playMusic(res.bgm_mp3, true);
+        }
+
+
   }
 });
 
@@ -148,6 +157,9 @@ switch(level[playerPosition.y+deltaY][playerPosition.x+deltaX]){
             playerPosition.y+=deltaY;
             level[playerPosition.y][playerPosition.x]+=1;
             playerSprite.setPosition(165+25*playerPosition.x,185-25*playerPosition.y);
+
+            if(level[playerPosition.y+deltaY*2][playerPosition.x+deltaX*2]==1 ||
+               level[playerPosition.y+deltaY*2][playerPosition.x+deltaX*2]==3)
             level[playerPosition.y+deltaY][playerPosition.x+deltaX]+=3;
             var movingCrate = cratesArray[playerPosition.y][playerPosition.x];
             movingCrate.setPosition(movingCrate.getPosition().x+25*deltaX,movingCrate.
