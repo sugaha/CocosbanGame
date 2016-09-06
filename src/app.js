@@ -15,6 +15,8 @@ var cratesArray = []; //配置した木箱のスプライトを配列に保持�
 var startTouch;
 var endTouch;
 var swipeTolerance = 10;//スワイプかを判断する閾値
+var gameFlag = 0;
+var crateFlag = 1;
 
 var gameScene = cc.Scene.extend({
   onEnter: function() {
@@ -61,6 +63,9 @@ var gameLayer = cc.Layer.extend({
       cratesArray[i] = [];　 //配列オブジェクトの生成
       for (j = 0; j < 7; j++) {
         switch (level[i][j]) {
+          case 2:
+            crateFlag += 1;
+          break;
           case 4:
           case 6:
             playerSprite = cc.Sprite.create(cache.getSpriteFrame("player.png"));
@@ -147,6 +152,9 @@ switch(level[playerPosition.y+deltaY][playerPosition.x+deltaX]){
         playerPosition.y+=deltaY;
         level[playerPosition.y][playerPosition.x]+=4;
         playerSprite.setPosition(165+25*playerPosition.x,185-25*playerPosition.y);
+
+        if(level[playerPosition.y+deltaY][playerPosition.x+deltaX] == 5){
+        gameFlag -= 1;}
     break;
     case 3:
     case 5:
@@ -157,16 +165,24 @@ switch(level[playerPosition.y+deltaY][playerPosition.x+deltaX]){
             playerPosition.y+=deltaY;
             level[playerPosition.y][playerPosition.x]+=1;
             playerSprite.setPosition(165+25*playerPosition.x,185-25*playerPosition.y);
-
-            if(level[playerPosition.y+deltaY*2][playerPosition.x+deltaX*2]==1 ||
-               level[playerPosition.y+deltaY*2][playerPosition.x+deltaX*2]==3)
             level[playerPosition.y+deltaY][playerPosition.x+deltaX]+=3;
+
+            if(level[playerPosition.y+deltaY][playerPosition.x+deltaX] == 5 )
+            gameFlag += 1;
+
+            if(gameFlag == crateFlag){
+                cc.director.runScene(new NextScene());
+            }
+
             var movingCrate = cratesArray[playerPosition.y][playerPosition.x];
             movingCrate.setPosition(movingCrate.getPosition().x+25*deltaX,movingCrate.
             getPosition().y-25*deltaY);
             cratesArray[playerPosition.y+deltaY][playerPosition.x+deltaX]=movingCrate;
             cratesArray[playerPosition.y][playerPosition.x]=null;
+
+
         }
         break;
+
     }
 }
