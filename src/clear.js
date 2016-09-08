@@ -13,6 +13,14 @@ var ClearLayer = cc.Layer.extend({
         label2.setPosition(size.width / 2, size.height / 4);
         this.addChild(label2, 1);
 
+        //音楽再生エンジン
+            audioEngine = cc.audioEngine;
+            //bgm再生
+            if (!audioEngine.isMusicPlaying()) {
+              //audioEngine.playMusic("res/bgm_main.mp3", true);
+              audioEngine.playMusic(res.clear_mp3, true);
+            }
+
         // タップイベントリスナーを登録する
         cc.eventManager.addListener({
             event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -28,6 +36,9 @@ var ClearLayer = cc.Layer.extend({
     },
     onTouchMoved: function(touch, event) {},
     onTouchEnded: function(touch, event) {
+      if (audioEngine.isMusicPlaying()) {
+        audioEngine.stopMusic();
+      }
 
         cc.director.runScene(new gameScene());
 

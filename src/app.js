@@ -253,6 +253,9 @@ function reset(){
 
 function clear_check(){
   if(gameFlag == crateFlag){
+    if (audioEngine.isMusicPlaying()) {
+        audioEngine.stopMusic();
+      }
       gameFlag = 0;
       crateFlag = 1;
       stage = stage + 1;
