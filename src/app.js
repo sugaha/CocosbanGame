@@ -8,6 +8,16 @@ var level = [
   [1, 0, 0, 1, 1, 1, 1],
   [1, 1, 1, 1, 1, 1, 1]
 ];
+var back_map = [  //リセット用
+[1, 1, 1, 1, 1, 1, 1],
+[1, 1, 0, 0, 0, 0, 1],
+[1, 1, 3, 0, 2, 0, 1],
+[1, 0, 0, 4, 0, 0, 1],
+[1, 0, 3, 1, 2, 0, 1],
+[1, 0, 0, 1, 1, 1, 1],
+[1, 1, 1, 1, 1, 1, 1]
+];
+
 var playerPosition; //マップ内のプレイやの位置(ｘ、ｙ)を保持する
 var playerSprite; //プレイヤーのスプライト
 var cratesArray = []; //配置した木箱のスプライトを配列に保持する
@@ -17,6 +27,9 @@ var endTouch;
 var swipeTolerance = 10;//スワイプかを判断する閾値
 var gameFlag = 0;
 var crateFlag = 1;
+
+var stage = 0;
+
 
 var gameScene = cc.Scene.extend({
   onEnter: function() {
@@ -171,7 +184,12 @@ switch(level[playerPosition.y+deltaY][playerPosition.x+deltaX]){
             gameFlag += 1;
 
             if(gameFlag == crateFlag){
-                cc.director.runScene(new NextScene());
+                gameFlag = 0;
+                crateFlag = 1;
+                stage = stage + 1;
+                cc.director.runScene(new ClearScene());
+
+
             }
 
             var movingCrate = cratesArray[playerPosition.y][playerPosition.x];
