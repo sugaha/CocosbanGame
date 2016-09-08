@@ -28,6 +28,7 @@ var ClearLayer = cc.Layer.extend({
     },
     onTouchMoved: function(touch, event) {},
     onTouchEnded: function(touch, event) {
+
         cc.director.runScene(new gameScene());
 
     if(stage == 0){
