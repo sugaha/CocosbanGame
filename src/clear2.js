@@ -1,5 +1,5 @@
 //nextScene.js
-var NextLayer = cc.Layer.extend({
+var NextLayer2 = cc.Layer.extend({
     ctor: function() {
         this._super();
 
@@ -10,7 +10,7 @@ var NextLayer = cc.Layer.extend({
         label.setPosition(size.width / 2, size.height / 2);
         this.addChild(label, 1);
 
-        var label = cc.LabelTTF.create("→NEXTGAME", "Arial", 26);
+        var label = cc.LabelTTF.create("→FINALGAME", "Arial", 26);
         label.setPosition(size.width / 2, size.height / 4);
         this.addChild(label, 1);
         return true;
@@ -43,16 +43,18 @@ var NextLayer = cc.Layer.extend({
     onTouchEnded: function(touch, event) {
         // 次のシーンに切り替える
 
-        cc.director.runScene(new SecondScene());
+        //cc.director.runScene(new SecondScene());
+
+
     },
 });
 
 
-var NextScene = cc.Scene.extend({
+var NextScene2 = cc.Scene.extend({
     onEnter: function() {
         this._super();
-        var layer1 = new NextLayer();
-        this.addChild(layer1);
+        var layer4 = new NextLayer2();
+        this.addChild(layer4);
 
     }
 });
